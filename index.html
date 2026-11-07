@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>시네페디아 — 영화 장르 & 용어 백과사전</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#111;--paper:#e9e6df;--paper2:#dcd8cf;--mid:#777;--line:#111}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Nanum Myeongjo',serif;line-height:1.7;filter:grayscale(1);
+background-image:radial-gradient(rgba(0,0,0,.07) 1px,transparent 1px);background-size:3px 3px}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.18;mix-blend-mode:multiply;
+background:repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 1px,transparent 1px 3px)}
+.mono{font-family:'Courier Prime','Special Elite',monospace}
+header{background:var(--ink);color:var(--paper);text-align:center;padding:34px 16px 20px;border-bottom:6px double var(--paper);position:relative}
+.perf{height:14px;background:repeating-linear-gradient(90deg,var(--paper) 0 10px,transparent 10px 22px);opacity:.9;margin:0 0 18px}
+h1{font-family:'Special Elite',serif;font-size:clamp(34px,7vw,72px);margin:0;letter-spacing:.08em;font-weight:400}
+header p{margin:6px 0 0;letter-spacing:.3em;font-size:13px;font-family:'Courier Prime',monospace}
+.stats{margin-top:12px;font-family:'Courier Prime',monospace;font-size:13px;color:#bbb}
+nav{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:3px solid var(--ink);display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px;align-items:center}
+nav button.tab{font-family:'Special Elite',serif;font-size:16px;background:transparent;border:2px solid var(--ink);padding:6px 16px;cursor:pointer;color:var(--ink)}
+nav button.tab.on{background:var(--ink);color:var(--paper)}
+nav input{flex:1;min-width:180px;font-family:'Courier Prime',monospace;font-size:15px;padding:8px 10px;border:2px solid var(--ink);background:#f6f4ee;outline:none}
+main{max-width:1180px;margin:0 auto;padding:22px 16px 80px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.chip{font-family:'Courier Prime',monospace;font-size:13px;border:1.5px solid var(--ink);padding:2px 10px;cursor:pointer;background:transparent;color:var(--ink)}
+.chip.on,.chip:hover{background:var(--ink);color:var(--paper)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:#f3f1ea;border:2px solid var(--ink);padding:16px;cursor:pointer;position:relative;box-shadow:6px 6px 0 var(--ink);transition:.12s}
+.card:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+.card .no{font-family:'Courier Prime',monospace;font-size:12px;color:var(--mid)}
+.card h3{font-family:'Special Elite',serif;font-weight:400;font-size:24px;margin:2px 0}
+.card .en{font-family:'Courier Prime',monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#444}
+.card p{font-size:14px;margin:10px 0 0}
+.card .cnt{position:absolute;top:12px;right:12px;font-family:'Courier Prime',monospace;font-size:12px;border:1.5px solid var(--ink);padding:0 6px;background:var(--ink);color:var(--paper)}
+.sec-title{font-family:'Special Elite',serif;font-size:28px;border-bottom:3px double var(--ink);margin:6px 0 16px;display:flex;justify-content:space-between;align-items:baseline}
+.sec-title small{font-family:'Courier Prime',monospace;font-size:13px}
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.term{border:2px solid var(--ink);background:#f6f4ee;padding:14px 16px;position:relative}
+.term .cat{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.15em;background:var(--ink);color:var(--paper);padding:1px 8px;display:inline-block}
+.term h4{margin:6px 0 0;font-size:20px;font-weight:800}
+.term .en{font-family:'Courier Prime',monospace;font-size:13px;color:#555}
+.term p{margin:6px 0;font-size:14px}
+.term .ex{font-size:13px;border-left:4px solid var(--ink);padding-left:10px;color:#333;margin:8px 0}
+.links{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.links .chip{font-size:12px;padding:0 8px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:50;display:none;overflow:auto;padding:30px 12px}
+.overlay.on{display:block}
+.modal{max-width:860px;margin:0 auto;background:var(--paper);border:3px solid var(--ink);box-shadow:10px 10px 0 #000;padding:26px 26px 30px;position:relative;filter:grayscale(1)}
+.modal .x{position:absolute;right:12px;top:8px;font-size:30px;cursor:pointer;background:none;border:0;font-family:'Special Elite'}
+.modal h2{font-family:'Special Elite',serif;font-weight:400;font-size:40px;margin:0}
+.modal h5{font-family:'Courier Prime',monospace;letter-spacing:.2em;margin:22px 0 6px;border-bottom:1.5px solid var(--ink);font-size:13px}
+.modal ul{margin:4px 0;padding-left:20px}
+.meta{font-family:'Courier Prime',monospace;font-size:14px;color:#444}
+.map{overflow:auto;border:2px solid var(--ink);background:#f6f4ee}
+table.mx{border-collapse:collapse;font-size:12px;font-family:'Courier Prime',monospace;width:100%}
+table.mx th,table.mx td{border:1px solid #999;padding:4px 6px;text-align:center}
+table.mx th:first-child,table.mx td:first-child{text-align:left;position:sticky;left:0;background:var(--paper2);font-weight:700;cursor:pointer}
+table.mx thead th{background:var(--ink);color:var(--paper);position:sticky;top:0}
+table.mx td.n{cursor:pointer;color:var(--paper)}
+.legend{font-family:'Courier Prime',monospace;font-size:13px;margin:0 0 10px}
+.empty{font-family:'Special Elite';font-size:22px;text-align:center;padding:50px;border:2px dashed var(--ink)}
+footer{border-top:6px double var(--ink);text-align:center;padding:18px;font-family:'Courier Prime',monospace;font-size:12px}
+.daily{border:3px solid var(--ink);padding:14px 18px;margin-bottom:24px;background:#f3f1ea;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.daily b{font-family:'Special Elite';font-size:20px}
+</style>
+</head>
+<body>
+<header>
+  <div class="perf"></div>
+  <h1>CINÉPÉDIA</h1>
+  <p>— 영화 장르 · 전문 용어 백과사전 —</p>
+  <div class="stats" id="stats"></div>
+</header>
+<nav>
+  <button class="tab on" data-v="genres">▣ 장르</button>
+  <button class="tab" data-v="terms">▤ 용어</button>
+  <button class="tab" data-v="map">▦ 연결 지도</button>
+  <input id="q" placeholder="검색: 장르, 용어, 영어, 영화 제목…" autocomplete="off">
+</nav>
+<main id="main"></main>
+<div class="overlay" id="ov"><div class="modal" id="md"></div></div>
+<footer>CINÉPÉDIA · 1 REEL · BLACK &amp; WHITE EDITION · 장르 ↔ 용어를 클릭해 서로 이동하세요</footer>
+
+<script src="data/genres.js"></script>
+<script src="data/terms1.js"></script>
+<script src="data/terms2.js"></script>
+<script src="data/terms3.js"></script>
+<script>
+const G=window.GENRES||[], T=[].concat(window.TERMS1||[],window.TERMS2||[],window.TERMS3||[]);
+const gm=Object.fromEntries(G.map(g=>[g.id,g]));
+const cats=[...new Set(T.map(t=>t.cat))];
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let view='genres', cat='전체', gf='전체';
+$('#stats').textContent=`${G.length} GENRES · ${T.length} TERMS · ${T.reduce((a,t)=>a+(t.genres||[]).length,0)} LINKS`;
+const termsOf=id=>T.filter(t=>(t.genres||[]).includes(id));
+const hit=(o,q)=>!q||JSON.stringify(o).toLowerCase().includes(q);
+const gchip=id=>gm[id]?`<button class="chip" onclick="openG('${id}')">${esc(gm[id].ko)}</button>`:'';
+const tchip=t=>`<button class="chip" onclick="openT('${t.id}')">${esc(t.ko)}</button>`;
+
+function render(){
+  const q=$('#q').value.trim().toLowerCase(), m=$('#main');
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
+  if(view==='genres'){
+    const l=G.filter(g=>hit(g,q));
+    m.innerHTML=`<div class="sec-title">장르 도감<small>${l.length} ENTRIES</small></div>`+
+    (l.length?`<div class="grid">${l.map((g,i)=>`<div class="card" onclick="openG('${g.id}')"><span class="cnt">${termsOf(g.id).length} 용어</span><div class="no">NO.${String(G.indexOf(g)+1).padStart(2,'0')} · ${esc(g.era)}</div><h3>${esc(g.icon)} ${esc(g.ko)}</h3><div class="en">${esc(g.en)}</div><p>${esc(g.tagline)}</p></div>`).join('')}</div>`:'<div class="empty">NO RESULTS — 검색 결과 없음</div>');
+  }else if(view==='terms'){
+    let l=T.filter(t=>(cat==='전체'||t.cat===cat)&&(gf==='전체'||(t.genres||[]).includes(gf))&&hit(t,q));
+    const d=T[Math.floor(Date.now()/864e5)%T.length];
+    m.innerHTML=(d&&!q&&cat==='전체'&&gf==='전체'?`<div class="daily"><span class="mono">TODAY'S WORD ▶</span><b>${esc(d.ko)}</b><span class="mono">${esc(d.en)}</span><button class="chip" onclick="openT('${d.id}')">보기</button></div>`:'')+
+    `<div class="mono" style="font-size:12px;margin-bottom:4px">CATEGORY</div><div class="chips">${['전체',...cats].map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${c}';render()">${esc(c)}</button>`).join('')}</div>
+     <div class="mono" style="font-size:12px;margin-bottom:4px">GENRE FILTER</div><div class="chips">${[{id:'전체',ko:'전체'},...G].map(g=>`<button class="chip ${g.id===gf?'on':''}" onclick="gf='${g.id}';render()">${esc(g.ko)}</button>`).join('')}</div>
+     <div class="sec-title">용어 사전<small>${l.length} ENTRIES</small></div>`+
+    (l.length?`<div class="terms">${l.sort((a,b)=>a.ko.localeCompare(b.ko,'ko')).map(termCard).join('')}</div>`:'<div class="empty">NO RESULTS — 검색 결과 없음</div>');
+  }else{
+    const mx=G.map(g=>{const row=cats.map(c=>T.filter(t=>t.cat===c&&(t.genres||[]).includes(g.id)).length);return{g,row}});
+    m.innerHTML=`<div class="sec-title">장르 × 용어 연결 지도<small>MATRIX</small></div><p class="legend">칸이 진할수록 해당 장르에 특화된 용어가 많습니다. 장르명 또는 숫자를 눌러 상세 보기.</p>
+    <div class="map"><table class="mx"><thead><tr><th>장르 \\ 분류</th>${cats.map(c=>`<th>${esc(c)}</th>`).join('')}<th>합계</th></tr></thead><tbody>
+    ${mx.map(({g,row})=>`<tr><td onclick="openG('${g.id}')">${esc(g.ko)}</td>${row.map((n,i)=>`<td class="${n?'n':''}" style="background:${n?`rgba(0,0,0,${Math.min(.15+n*.17,1)})`:'transparent'}" ${n?`onclick="cat='${cats[i]}';gf='${g.id}';view='terms';render();scrollTo(0,0)"`:''}>${n||'·'}</td>`).join('')}<td><b>${row.reduce((a,b)=>a+b,0)}</b></td></tr>`).join('')}
+    </tbody></table></div>`;
+  }
+}
+function termCard(t){return `<div class="term"><span class="cat">${esc(t.cat)}</span><h4 style="cursor:pointer" onclick="openT('${t.id}')">${esc(t.ko)}</h4><div class="en">${esc(t.en)}</div><p>${esc(t.def)}</p>${t.example?`<div class="ex">예) ${esc(t.example)}</div>`:''}<div class="links">${(t.genres||[]).map(gchip).join('')}</div></div>`}
+function show(h){$('#md').innerHTML=`<button class="x" onclick="closeM()">×</button>`+h;$('#ov').classList.add('on')}
+function closeM(){$('#ov').classList.remove('on')}
+function openG(id){const g=gm[id];if(!g)return;const ts=termsOf(id);
+  const byCat={};ts.forEach(t=>(byCat[t.cat]=byCat[t.cat]||[]).push(t));
+  show(`<div class="meta">GENRE · ${esc(g.era)}</div><h2>${esc(g.icon)} ${esc(g.ko)}</h2><div class="meta">${esc(g.en)} — ${esc(g.tagline)}</div>
+  <p>${esc(g.desc)}</p>
+  <h5>CONVENTIONS · 장르 관습</h5><ul>${(g.conventions||[]).map(c=>`<li>${esc(c)}</li>`).join('')}</ul>
+  <h5>CLASSICS · 대표작</h5><ul>${(g.classics||[]).map(c=>`<li>${esc(c)}</li>`).join('')}</ul>
+  <h5>SUBGENRES · 하위 장르</h5><div class="links">${(g.subgenres||[]).map(s=>`<span class="chip">${esc(s)}</span>`).join('')}</div>
+  <h5>LINKED TERMS · 이 장르의 특수 용어 (${ts.length})</h5>${Object.entries(byCat).map(([c,l])=>`<div class="meta" style="margin-top:8px">▸ ${esc(c)}</div><div class="links">${l.map(tchip).join('')}</div>`).join('')||'<p class="meta">연결된 용어 없음</p>'}`);
+  $('#ov').scrollTop=0}
+function openT(id){const t=T.find(x=>x.id===id);if(!t)return;
+  const rel=T.filter(o=>o.id!==id&&(o.genres||[]).some(g=>(t.genres||[]).includes(g))).slice(0,14);
+  show(`<div class="meta">TERM · ${esc(t.cat)}</div><h2>${esc(t.ko)}</h2><div class="meta">${esc(t.en)}</div><p>${esc(t.def)}</p>
+  ${t.example?`<h5>EXAMPLE · 사용 예</h5><p>${esc(t.example)}</p>`:''}
+  <h5>LINKED GENRES · 주로 쓰이는 장르</h5><div class="links">${(t.genres||[]).map(gchip).join('')}</div>
+  <h5>RELATED TERMS · 같은 장르의 다른 용어</h5><div class="links">${rel.map(tchip).join('')}</div>`);
+  $('#ov').scrollTop=0}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{view=b.dataset.v;render()});
+$('#q').oninput=()=>{if(view==='map')view='terms';render()};
+$('#ov').onclick=e=>{if(e.target.id==='ov')closeM()};
+addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+render();
+</script>
+</body>
+</html>
